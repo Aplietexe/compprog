@@ -15,3 +15,9 @@ ll moddiv(ll a, ll b)
 {
     return a * modpow(b, MOD - 2) % MOD;
 }
+
+ll sum(ll s, ll e)
+{
+    ll n = ((s + e) % MOD) * ((e - s + 1) % MOD);
+    return moddiv(n % MOD, 2);
+}
