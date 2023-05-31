@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 typedef long long ll;
+typedef long double ld;
 #define FIN                  \
     ios::sync_with_stdio(0); \
     cin.tie(0);              \
@@ -21,11 +22,13 @@ typedef long long ll;
 #define pll pair<ll, ll>
 #define vll vector<ll>
 #define vvll vector<vector<ll>>
-#define dgrid(a, r, c, init) vvll a(c, vector<ll>(r, (init)))
+#define vld vector<ld>
+#define vvld vector<vector<ld>>
+#define vc vector<char>
 #define vvc vector<vector<char>>
-#define vtll vector<tuple<ll, ll, ll>>
-#define dvvc(a, r, c) vvc a(c, vector<char>(r))
+#define vpll vector<pll>
 using namespace std;
 const ll dir[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
- 
-const ll MAXN = 1e6 + 10;
+const ll INF = 1e18;
+const ll MAXN = 1e9;
+const ll MOD = 1e9 + 7;
