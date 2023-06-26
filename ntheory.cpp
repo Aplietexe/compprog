@@ -45,16 +45,25 @@ vpll p_factors(ll n)
     return res;
 }
 
-ll cr[MAXN]; // -1 if prime, some not trivial divisor if not
+vector<int> cr(MAXN, -1); // -1 if 0, 1 or prime. The smallest prime divisor otherwise
 void init_sieve()
 {
-    memset(cr, -1, sizeof(cr));
-    fori(i, 2, MAXN) if (cr[i] < 0) for (ll j = i * i; j < MAXN; j += i) cr[j] = i;
+    fori(i, 2, MAXN)
+    {
+        if (cr[i] < 0)
+            for (ll j = i * i; j < MAXN; j += i)
+                if (cr[j] < 0)
+                    cr[j] = i;
+    }
 }
 
-vpll sieve_fact(ll n)
+vector<pair<int, int>> sieve_fact(int n)
 {
-    vpll r;
+    if (n == 1)
+        return {};
+    if (cr[n] == -1)
+        return {{n, 1}};
+    vector<pair<int, int>> r;
     ll last = 0;
     while (cr[n] >= 0)
     {
@@ -68,24 +77,24 @@ vpll sieve_fact(ll n)
         if (r.back().fst == n)
             r.back().snd++;
         else
-            r.pb({cr[n], 1});
+            r.pb({n, 1});
     }
 
     return r;
 }
 
-void div_rec(vector<ll> &r, vector<pair<ll, ll>> &f, ll k, ll c)
+void div_rec(vector<int> &r, vector<pair<int, int>> &f, int k, int c)
 {
-    if (k == (ll)f.size())
+    if (k == (int)f.size())
     {
         r.pb(c);
         return;
     }
     fori(i, 0, f[k].snd + 1) div_rec(r, f, k + 1, c), c *= f[k].fst;
 }
-vector<ll> divisors(vector<pair<ll, ll>> f)
+vector<int> divisors(vector<pair<int, int>> f)
 {
-    vector<ll> r; // returns divisors given factorization
+    vector<int> r; // returns divisors given factorization
     div_rec(r, f, 0, 1);
     return r;
 }
