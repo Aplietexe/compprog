@@ -83,18 +83,18 @@ vector<pair<int, int>> sieve_fact(int n)
     return r;
 }
 
-void div_rec(vector<int> &r, vector<pair<int, int>> &f, int k, int c)
+void div_rec(vector<ll> &r, vector<pair<ll, ll>> &f, ll k, ll c)
 {
-    if (k == (int)f.size())
+    if (k == (ll)f.size())
     {
         r.pb(c);
         return;
     }
     fori(i, 0, f[k].snd + 1) div_rec(r, f, k + 1, c), c *= f[k].fst;
 }
-vector<int> divisors(vector<pair<int, int>> f)
+vector<ll> divisors(vector<pair<ll, ll>> f)
 {
-    vector<int> r; // returns divisors given factorization
+    vector<ll> r; // returns divisors given factorization
     div_rec(r, f, 0, 1);
     return r;
 }
