@@ -1,41 +1,68 @@
-vector<vector<pair<ll, ll>>> g(MAXN);
-vll d(MAXN, -1);
-vll p(MAXN);
+vvii g(MAXN);
+vi d(MAXN, INF);
+vi p(MAXN);
 ll n, m;
- 
-void dijkstra(ll v)
+
+void dijkstra(ll s) // O(n^2 + m)
 {
-    d[v] = 0;
- 
-    priority_queue<pair<ll, ll>> q;
-    q.push({0, v});
- 
+    vector<bool> u(n);
+    d[s] = 0;
+
+    fori(i, 0, n)
+    {
+        ll v = -1;
+        fori(j, 0, n) if (!u[j] && (v == -1 || d[j] < d[v]))
+            v = j;
+
+        if (d[v] == INF)
+            break;
+
+        u[v] = true;
+        for (auto edge : g[v])
+        {
+            ll to = edge.first;
+            ll len = edge.second;
+
+            if (d[v] + len < d[to])
+            {
+                d[to] = d[v] + len;
+                p[to] = v;
+            }
+        }
+    }
+}
+
+void dijkstra(ll s) // O(m log n)
+{
+    d[s] = 0;
+    priority_queue<ii, vector<ii>, greater<ii>> q;
+    q.push({0, s});
     while (!q.empty())
     {
-        v = q.top().snd;
-        ll c = -q.top().fst;
+        ll v = q.top().second;
+        ll d_v = q.top().first;
         q.pop();
- 
-        if (d[v] != c)
+        if (d_v != d[v])
             continue;
- 
-        fori(i, 0, g[v].size())
+
+        for (auto edge : g[v])
         {
-            ll to = g[v][i].fst;
-            ll c = g[v][i].snd;
-            if (d[to] < 0 || d[v] + c < d[to])
+            ll to = edge.first;
+            ll len = edge.second;
+
+            if (d[v] + len < d[to])
             {
-                d[to] = d[v] + c;
+                d[to] = d[v] + len;
                 p[to] = v;
-                q.push({-d[to], to});
+                q.push({d[to], to});
             }
         }
     }
 }
  
-vector<ll> get_path(ll s, ll e)
+vi get_path(ll s, ll e)
 {
-    vector<ll> path;
+    vi path;
  
     for (ll v = e; v != s; v = p[v])
         path.push_back(v);
