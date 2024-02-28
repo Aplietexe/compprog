@@ -13,7 +13,7 @@ ostream& operator<<(ostream& os, lll value) {
     if (numeric_limits<unsigned long long>::max() >= value) return os << (unsigned long long)value;
     string s;
     do {
-        s += value % 10 + '0';
+        s += (char)(value % 10 + '0');
         value /= 10;
     } while (value);
     rof(i, SZ(s), 0) os << s[i];
