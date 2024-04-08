@@ -1,17 +1,11 @@
-pair<vi, map<ll, ll>> compress(vi &a)
-{
+auto compress(vi& a) {
     vi inv = a;
-    sort(all(inv));
-    inv.erase(unique(all(inv)), inv.end());
-
-    map<ll, ll> rank;
-    fori(i, 0, SZ(inv))
-        rank[inv[i]] = i;
-
-    for (auto &x : a)
-        x = rank[x];
-
-    return {inv, rank};
+    sort(ALL(inv));
+    inv.erase(unique(ALL(inv)), inv.end());
+    auto rank = [inv](ll x) { return lower_bound(ALL(inv), x) - inv.begin(); };
+    for (auto& x : a) x = rank(x);
+    return pair(inv, rank);
 }
 
-// test: https://codeforces.com/gym/102951/submission/228361925
+// https://codeforces.com/gym/102951/submission/255777690
+// https://codeforces.com/contest/1955/submission/255777078
