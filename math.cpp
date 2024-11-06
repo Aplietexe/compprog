@@ -64,48 +64,6 @@ void linear_sieve()  // O(n)
     }
 }
 
-vii sieve_fact(int n)
-{
-    if (n == 1)
-        return {};
-    if (lp[n] == -1)
-        return {{n, 1}};
-    vii r;
-    ll last = 0;
-    while (lp[n] >= 0)
-    {
-        if (lp[n] != last)
-            r.pb({lp[n], 0}), last = lp[n];
-        r.back().snd++;
-        n /= lp[n];
-    }
-    if (n > 1)
-    {
-        if (r.back().fst == n)
-            r.back().snd++;
-        else
-            r.pb({n, 1});
-    }
-
-    return r;
-}
-
-void div_rec(vi &r, vii &f, ll k, ll c)
-{
-    if (k == (ll)f.size())
-    {
-        r.pb(c);
-        return;
-    }
-    fori(i, 0, f[k].snd + 1) div_rec(r, f, k + 1, c), c *= f[k].fst;
-}
-vi divisors(vii f)
-{
-    vi r; // returns divisors given factorization
-    div_rec(r, f, 0, 1);
-    return r;
-}
-
 ll S_k(ll first, ll last, ll step) // sum(range(first, last, step))
 {
     if (first >= last)
@@ -115,20 +73,6 @@ ll S_k(ll first, ll last, ll step) // sum(range(first, last, step))
     ll k = (last - first) / step + 1;
     ll a_k = first + (k - 1) * step;
     return (k * (first + a_k)) / 2;
-}
-
-ll modpow(ll b, ll e)
-{
-    ll ans = 1;
-    for (; e; b = b * b % MOD, e /= 2)
-        if (e & 1)
-            ans = ans * b % MOD;
-    return ans;
-}
-
-ll moddiv(ll a, ll b)
-{
-    return a * modpow(b, MOD - 2) % MOD;
 }
 
 ll S_k(ll first, ll last, ll step) // sum(range(first, last, step)) % MOD
